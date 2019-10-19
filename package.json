@@ -1,0 +1,19 @@
+{
+  "name": "calcul-routier",
+  "version": "1.0.0",
+  "description": "B2A - Calcul routier - Ynov Informatique",
+  "main": "index.js",
+  "scripts": {
+    "watch": "postcss ./assets/css/app.css -o ./public/css/app.css --watch",
+    "build": "postcss ./assets/css/app.css -o ./public/css/app.css"
+  },
+  "author": "Thomas Le Naour",
+  "license": "ISC",
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^1.3.0",
+    "autoprefixer": "^9.6.5",
+    "cssnano": "^4.1.10",
+    "postcss-cli": "^6.1.3",
+    "tailwindcss": "^1.1.2"
+  }
+}
