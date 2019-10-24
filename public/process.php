@@ -53,7 +53,7 @@ if (isset($_POST['departure-city']) && isset($_POST['arrival-city']) && !empty($
             if ($nbBreaks !== 0) {
                 $minutesBreak = $nbBreaks * 15;
                 $hoursBreak = $minutesBreak / 60;
-                $totalTimeInHours += $hoursBreak;
+                $totalTimeInHours += $hoursBreak + $timeTraveledInEighteenMinutes;
             }
 
             // Total time formatted

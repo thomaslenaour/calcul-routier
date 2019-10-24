@@ -62,6 +62,7 @@
                     <p><strong>Ville d'arrivée :</strong> <?= $arrivalCity ?></p>
                     <p><strong>Distance :</strong> <?= $totalKmDistance ?> km</p>
                     <p><strong>Temps de trajet :</strong> <?= $totalTime ?></p>
+                    <p><strong>Nombre de pause(s) :</strong> <?= $nbBreaks ?></p>
                 </div>
             <?php
             }
