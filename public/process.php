@@ -1,34 +1,56 @@
 <?php
-if (isset($_POST['departure-city']) && isset($_POST['arrival-city']) && !empty($_POST['departure-city']) && !empty($_POST['arrival-city'])) {
-    $departureCity = htmlspecialchars(trim(ucfirst(strtolower($_POST['departure-city']))));
-    $arrivalCity = htmlspecialchars(trim(ucfirst(strtolower($_POST['arrival-city']))));
-    
-    $url = 'https://fr.distance24.org/route.json?stops=' . $departureCity . '|' . $arrivalCity;
-    $result = file_get_contents($url);
-    $data = json_decode($result, true);
+require('functions.php');
 
-    if ((is_null($data)) || $data['stops'][0]['type'] === 'Invalid' || $data['stops'][1]['type'] === 'Invalid') {
-        $errorMessage = 'Merci de saisir un nom de ville valide';
+if (isset($_POST['departure-city']) && isset($_POST['arrival-city']) && !empty($_POST['departure-city']) && !empty($_POST['arrival-city'])) {
+    if ($_POST['departure-city'] !== $_POST['arrival-city']) {
+        $departureCity = htmlspecialchars(trim(ucfirst(strtolower($_POST['departure-city']))));
+        $arrivalCity = htmlspecialchars(trim(ucfirst(strtolower($_POST['arrival-city']))));
+        
+        $url = 'https://fr.distance24.org/route.json?stops=' . $departureCity . '|' . $arrivalCity;
+        $result = file_get_contents($url);
+        $data = json_decode($result, true);
+
+        if ((is_null($data)) || $data['stops'][0]['type'] === 'Invalid' || $data['stops'][1]['type'] === 'Invalid') {
+            $errorMessage = 'Merci de saisir un nom de ville valide';
+        }
+        else {
+            $requestIsSuccess = true;
+            $successMessage = 'La requête a bien été exécutée';
+
+            $totalKmDistance = $data['distance'];
+            
+            $distanceTraveledInNineMinutes = [];
+            $timeTraveledInNineMinutes = [];
+            for ($i = 1 ; $i < 10 ; $i++) {
+                $speed = $i * 10;
+                $time = 1 / 60;
+                $distance = $speed * $time;
+                $timeToTravel = $distance / $speed;
+
+                array_push($distanceTraveledInNineMinutes, $distance);
+                array_push($timeTraveledInNineMinutes, $timeToTravel);
+            }
+
+            // Distance traveled in 9 minutes and 18 minutes
+            $totalDistanceTraveledInNineMinutes = array_sum($distanceTraveledInNineMinutes);
+            $distanceTraveledInEighteenMinutes = $totalDistanceTraveledInNineMinutes * 2;
+
+            // Time to travel distance in 9 minutes and 17 minutes
+            $totalTimeTraveledInNineMinutes = array_sum($timeTraveledInNineMinutes);
+            $timeTraveledInEighteenMinutes = $totalTimeTraveledInNineMinutes * 2;
+
+            // Remaining distance & time to travel it
+            $remainingKmDistance = $totalKmDistance - $distanceTraveledInEighteenMinutes;
+            $timeToTravelRemainingDistance = $remainingKmDistance / 90;
+
+            // Total time in hours
+            $totalTimeInHours = $timeTraveledInEighteenMinutes + $timeToTravelRemainingDistance;
+
+            // Total time formatted
+            $totalTime = str_replace(':', 'h', convertTime($totalTimeInHours));
+        }
     }
     else {
-        $requestIsSuccess = true;
-        $successMessage = 'La requête a bien été exécutée';
-
-        $totalDistance = $data['distance'];
-
-        $distanceTraveled = [];
-        for ($i = 1 ; $i < 10 ; $i++) {
-            array_push($distanceTraveled, ($i * 10) * (1 / 60));
-        }
-
-        $distanceTraveledInNineMinutes = array_sum($distanceTraveled);
-        $distanceTraveledInEighteenMinutes = $distanceTraveledInNineMinutes * 2;
-        $remainingDistance = $totalDistance - $distanceTraveledInEighteenMinutes;
-
-        $totalTimeInMinutes = (18 + (($remainingDistance / 90) * 60)) / 60;
-        $whole = floor($totalTimeInMinutes);
-        $fraction = round($totalTimeInMinutes - $whole, 2);
-
-        $totalTime = $whole . 'h' . $fraction;
+        $errorMessage = 'Merci de saisir deux villes différentes';
     }
 }

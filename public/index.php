@@ -62,8 +62,8 @@
                 <div class="text-center">
                     <p><strong>Ville de départ :</strong> <?= $departureCity ?></p>
                     <p><strong>Ville d'arrivée :</strong> <?= $arrivalCity ?></p>
-                    <p><strong>Distance :</strong> <?= $totalDistance ?> km</p>
-                    <p><strong>Temps de trajet :</strong> <?= $totalTime ?> min</p>
+                    <p><strong>Distance :</strong> <?= $totalKmDistance ?> km</p>
+                    <p><strong>Temps de trajet :</strong> <?= $totalTime ?></p>
                 </div>
             <?php
             }
