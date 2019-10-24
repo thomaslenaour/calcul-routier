@@ -34,7 +34,10 @@
                 ?>
 
                 <h1 class="mt-10 text-3xl text-teal-500 font-semibold">🚙 Calcul Routier 🚙</h1>
-                <p class="mb-10">Entrez une ville de départ et une ville d'arrivée, on se charge du reste... ;)</p>
+                <p class="mb-10">
+                    Entrez une ville de départ et une ville d'arrivée, on se charge du reste... ;)<br>
+                    N'oubliez pas de faire une pause toute les 2 heures !
+                </p>
             </div>
 
             <form action="./" method="post" class="flex flex-col items-center">
@@ -42,11 +45,6 @@
                     <input type="text" name="departure-city" placeholder="Ville de départ" class="border border-gray-400 p-3 mr-5 rounded-lg" required>
                     <input type="text" name="arrival-city" placeholder="Ville d'arrivée" class="border border-gray-400 p-3 ml-5 rounded-lg" required>
                 </div>
-
-                <a href="#" class="mt-5 text-teal-500">
-                    <i class="fas fa-plus-circle mr-1"></i>
-                    Ajouter une étape
-                </a>
 
                 <button type="submit" class="mt-5 px-3 py-2 bg-teal-500 text-white rounded-lg shadow-lg">
                     <i class="fas fa-magic mr-1"></i>

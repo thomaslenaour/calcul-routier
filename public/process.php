@@ -3,8 +3,8 @@ require('functions.php');
 
 if (isset($_POST['departure-city']) && isset($_POST['arrival-city']) && !empty($_POST['departure-city']) && !empty($_POST['arrival-city'])) {
     if ($_POST['departure-city'] !== $_POST['arrival-city']) {
-        $departureCity = htmlspecialchars(trim(ucfirst(strtolower($_POST['departure-city']))));
-        $arrivalCity = htmlspecialchars(trim(ucfirst(strtolower($_POST['arrival-city']))));
+        $departureCity = secureString($_POST['departure-city']);
+        $arrivalCity = secureString($_POST['arrival-city']);
         
         $url = 'https://fr.distance24.org/route.json?stops=' . $departureCity . '|' . $arrivalCity;
         $result = file_get_contents($url);
@@ -18,7 +18,7 @@ if (isset($_POST['departure-city']) && isset($_POST['arrival-city']) && !empty($
             $successMessage = 'La requête a bien été exécutée';
 
             $totalKmDistance = $data['distance'];
-            
+
             $distanceTraveledInNineMinutes = [];
             $timeTraveledInNineMinutes = [];
             for ($i = 1 ; $i < 10 ; $i++) {
@@ -46,8 +46,18 @@ if (isset($_POST['departure-city']) && isset($_POST['arrival-city']) && !empty($
             // Total time in hours
             $totalTimeInHours = $timeTraveledInEighteenMinutes + $timeToTravelRemainingDistance;
 
+            // Breaks
+            $breakTimeLimit = 2;
+            $nbBreaks = intval($totalTimeInHours / $breakTimeLimit);
+
+            if ($nbBreaks !== 0) {
+                $minutesBreak = $nbBreaks * 15;
+                $hoursBreak = $minutesBreak / 60;
+                $totalTimeInHours += $hoursBreak;
+            }
+
             // Total time formatted
-            $totalTime = str_replace(':', 'h', convertTime($totalTimeInHours));
+            $totalTime = convertTime($totalTimeInHours);
         }
     }
     else {
