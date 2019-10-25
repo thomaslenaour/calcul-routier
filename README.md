@@ -11,7 +11,7 @@ Ce projet consiste à demander deux villes à un utilisateur : une ville de dép
 ## Utilisation de l'application
 
 * Cloner le repository
-* Faire pointer un serveur Apache vers le dossier public (avec WAMP, MAMP ou encore XAMPP par exemple)
+* Faire pointer un serveur Apache vers le dossier  `public` (avec WAMP, MAMP ou encore XAMPP par exemple)
 * Se rendre sur l'adresse web du serveur `localhost` ou `127.0.0.1`
 * Enjoy 😎
 
