@@ -9,6 +9,6 @@ module.exports = {
         require('autoprefixer'),
         require('cssnano'),
         // Comment the line below in developement mode
-        // purgecss
+        purgecss
     ]
 };
