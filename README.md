@@ -15,4 +15,6 @@ Ce projet consiste à demander deux villes à un utilisateur : une ville de dép
 * Se rendre sur l'adresse web du serveur `localhost` ou `127.0.0.1`
 * Enjoy 😎
 
-*Ce projet est un projet d'école*
+*Ceci est un projet d'école*
+
+Thomas Le Naour
